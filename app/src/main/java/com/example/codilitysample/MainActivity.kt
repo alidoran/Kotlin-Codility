@@ -2,6 +2,7 @@ package com.example.codilitysample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import java.lang.StringBuilder
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
     object TestPart {
         @JvmStatic
         fun main(args: Array<String>) {
-            var c: IntArray = intArrayOf(4, 3, 5, 2, 5, 3, 2)
+            var c: IntArray = intArrayOf(0, 0, 0, 0, 0, 0)
             findUnpairedNum2(c)
         }
     }
@@ -34,6 +35,9 @@ fun findUnpairedNum(intArray: IntArray): Int {
 fun findUnpairedNum2(inputArray: IntArray): Int {
     //result 66%
     val intArray = inputArray.toMutableList()
+    var a =intArray.groupingBy { i -> i }.eachCount().filter { i -> i.value == 1 }.toList()
+    return a.get(0).first
+
     while (intArray.size > 0) {
         if (intArray.size == 1)
             return intArray[0]
