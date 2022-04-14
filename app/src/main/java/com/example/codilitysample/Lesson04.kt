@@ -48,15 +48,15 @@ Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized cop
  */
 
 fun callFrogRiverOne(){
-    val inputArray = ArrayList(listOf(1,3,1,4,2,3,5,4))
+    val inputArray = intArrayOf(1,3,1,4,2,3,5,4)
     frogRiverOne(5, inputArray)
 }
 
 //100% Codility
-private fun frogRiverOne(x: Int, inputLeavesArray: ArrayList<Int>): Int {
+fun frogRiverOne(x: Int, inputLeavesArray: IntArray): Int {
     var successPoint = 0
     val fallLeavesArray = BooleanArray(x+1)
-    for (i in 0 until inputLeavesArray.size) {
+    for (i in inputLeavesArray.indices) {
         val inputLeaf = inputLeavesArray[i];
         if (!fallLeavesArray[inputLeaf]) {
             fallLeavesArray[inputLeaf] = true

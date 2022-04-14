@@ -19,43 +19,15 @@ Write an efficient algorithm for the following assumptions:
 N is an integer within the range [1..2,147,483,647].
 Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
  */
-    private fun numToBinary(num: Double): String {
-        var inputNum = num
-        var binaryNum = ""
-        while (inputNum > 1) {
-            binaryNum += inputNum % 2
-            inputNum /= 2
-        }
-        binaryNum += inputNum
-        return binaryNum.reversed()
+fun binaryGapCount(num: Int): Int {
+    val binaryNum = Integer.toBinaryString(num)
+    val regex = "(?<=1)(0+)(?=1)".toRegex()
+    val d = regex.findAll(binaryNum).toList()
+    var max = 0
+    for (list in d) {
+        if (list.value.length > max)
+            max = list.value.length
     }
-
-    fun binaryGapCount(num: Int): Int {
-        var binaryNum = Integer.toBinaryString(num)
-        val regex = "(?<=1)(0+)(?=1)".toRegex()
-        val c = regex.findAll(binaryNum).count()
-        return c
-    }
-
-    fun binaryGapMax(num: Int): Int {
-        var binaryNum = Integer.toBinaryString(num)
-        val regex = "(?<=1)(0+)(?=1)".toRegex()
-        val d = regex.findAll(binaryNum).toList()
-
-        var max = 0
-        for (list in d) {
-            var size = list.value.length
-            if (size > max)
-                max = size
-        }
-        return max
-    }
-
-    fun binaryGapMaxConcise(num: Int){
-        num.toString(2)
-            .trimEnd { it == '0' }
-            .split("1")
-            .map { it.length }
-            .maxOrNull() ?:0
-    }
+    return max
+}
 //endregion
