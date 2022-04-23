@@ -233,3 +233,52 @@ fun maxCounter(counterCount: Int, inputArray: IntArray): IntArray {
     return counters
 }
 //endregion
+
+//region MissingInteger
+/*
+This is a demo task.
+
+Write a function:
+
+fun solution(A: IntArray): Int
+
+that, given an array A of N integers, returns the smallest positive integer (greater than 0) that does not occur in A.
+
+For example, given A = [1, 3, 6, 4, 1, 2], the function should return 5.
+
+Given A = [1, 2, 3], the function should return 4.
+
+Given A = [−1, −3], the function should return 1.
+
+Write an efficient algorithm for the following assumptions:
+
+N is an integer within the range [1..100,000];
+each element of array A is an integer within the range [−1,000,000..1,000,000].
+Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
+ */
+
+fun missingInteger01(inputArray: IntArray): Int {
+    //55% Codility
+    inputArray.sort()
+    if (inputArray.last() < 0) return 1
+    for (i in inputArray.indices) {
+        if (inputArray[i] > 0
+            && i != inputArray.lastIndex
+            && inputArray[i] + 1 < inputArray[i + 1]
+        )
+            return inputArray[i] + 1
+    }
+    return inputArray.last() + 1
+}
+
+fun missingInteger02(inputArray: IntArray): Int {
+    //100% Codility
+    inputArray.sort()
+    var result = 1
+    for (i in inputArray) {
+        if (i == result)
+            result++
+    }
+    return result
+}
+//endregion
