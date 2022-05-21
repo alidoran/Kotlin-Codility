@@ -114,10 +114,25 @@ Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized cop
             }
         }
         if (divisibleNum == -1) return 0
-        return ((last-divisibleNum)/div)+1
+        return ((last - divisibleNum) / div) + 1
+    }
+
+    fun countDiv04(first: Int, last: Int, div: Int): Int {
+        //100% Codility (Better than countDiv03)
+        val dividableToLast = last / div
+        val dividableToFirst: Int
+        val result: Int
+        if (first == 0){
+            dividableToFirst = first / div
+            result = dividableToLast - dividableToFirst + 1
+        }else{
+            dividableToFirst = (first - 1) / div
+            result = dividableToLast - dividableToFirst
+        }
+        return result
     }
 }
 
 fun main() {
-    Lesson05().countDiv03(6, 11, 2)
+    Lesson05().countDiv04(0, 0, 11)
 }
