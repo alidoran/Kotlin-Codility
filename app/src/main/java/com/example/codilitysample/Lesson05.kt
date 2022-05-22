@@ -1,5 +1,8 @@
 package com.example.codilitysample
 
+import android.text.TextUtils.substring
+import java.lang.StringBuilder
+
 class Lesson05 {
 
     /*
@@ -168,15 +171,19 @@ class Lesson05 {
         P[K] ≤ Q[K], where 0 ≤ K < M;
         string S consists only of upper-case English letters A, C, G, T.
      */
-    fun genomicRangeQuery(inputDna: String, firstArray: IntArray, secondArray: IntArray): IntArray {
+    fun genomicRangeQuery01(
+        inputDna: String,
+        firstArray: IntArray,
+        secondArray: IntArray
+    ): IntArray {
         //codility 25%
-        val result= ArrayList<Int>()
+        val result = ArrayList<Int>()
         var investigateString: String
-        for (i in 0..firstArray.lastIndex){
-            investigateString = if (firstArray[i]== secondArray[i])
+        for (i in 0..firstArray.lastIndex) {
+            investigateString = if (firstArray[i] == secondArray[i])
                 inputDna[firstArray[i]].toString()
             else
-            inputDna.substring(firstArray[i], secondArray[i])
+                inputDna.substring(firstArray[i], secondArray[i])
             if (investigateString.contains('A'))
                 result.add(1)
             else if (investigateString.contains('C'))
@@ -189,7 +196,34 @@ class Lesson05 {
         return result.toIntArray()
     }
 
-
+    fun genomicRangeQuery02(
+        //Codility doesn't understand minOf
+        inputDna: String,
+        firstArray: IntArray,
+        secondArray: IntArray
+    ): IntArray {
+        val result = ArrayList<Int>()
+        val inputDnaNum = StringBuilder()
+        for (input in inputDna) {
+            if (input == 'A')
+                inputDnaNum.append(1)
+            if (input == 'C')
+                inputDnaNum.append(2)
+            if (input == 'G')
+                inputDnaNum.append(3)
+            if (input == 'T')
+                inputDnaNum.append(4)
+        }
+        for (i in 0..firstArray.lastIndex) {
+            val mDna =
+                if (firstArray[i] == secondArray[i])
+                    charArrayOf(inputDnaNum[firstArray[i]])
+                else
+                    inputDnaNum.substring(firstArray[i], secondArray[i]).toCharArray()
+            result.add(mDna.minOf { it.digitToInt() }.toInt())
+        }
+        return result.toIntArray()
+    }
 }
 
 /*
@@ -199,7 +233,7 @@ class Lesson05 {
  */
 
 fun main() {
-    val firstArray = arrayListOf<Int>(2,5,0).toIntArray()
-    val secondArray = arrayListOf<Int>(4,5,6).toIntArray()
-    Lesson05().genomicRangeQuery("CAGCCTA",firstArray, secondArray)
+    val firstArray = arrayListOf<Int>(2, 5, 0).toIntArray()
+    val secondArray = arrayListOf<Int>(4, 5, 6).toIntArray()
+    Lesson05().genomicRangeQuery02("CAGCCTA", firstArray, secondArray)
 }
