@@ -1,8 +1,5 @@
 package com.example.codilitysample
 
-import android.text.TextUtils.substring
-import java.lang.StringBuilder
-
 class Lesson05 {
 
     /*
@@ -224,16 +221,119 @@ class Lesson05 {
         }
         return result.toIntArray()
     }
-}
 
-/*
-    P[0] = 2    Q[0] = 4
-    P[1] = 5    Q[1] = 5
-    P[2] = 0    Q[2] = 6
+    fun genomicRangeQuery03(
+        //codility 25%
+        inputDna: String,
+        firstArray: IntArray,
+        secondArray: IntArray
+    ): IntArray {
+        val result = ArrayList<Int>()
+        val nList = ArrayList(arrayListOf('A', 'C', 'G', 'T'))
+        for (i in 0..firstArray.lastIndex) {
+            var min = 3
+            val subString = inputDna.substring(firstArray[i], secondArray[i])
+            for (sub in subString) {
+                for (n in 0..3) {
+                    if (sub == nList[n]
+                        && n < min
+                    ) {
+                        min = n
+                        if (n == 0) break
+                    }
+                }
+            }
+            result.add(min + 1)
+        }
+        return result.toIntArray()
+    }
+
+    fun genomicRangeQuery04(
+        //codility 62%
+        inputDna: String,
+        firstArray: IntArray,
+        secondArray: IntArray
+    )
+            : IntArray {
+        val result = ArrayList<Int>()
+        for (i in 0..firstArray.lastIndex) {
+            val subString =
+                inputDna.substring(firstArray[i], secondArray[i]) + inputDna[secondArray[i]]
+            val grpBy = subString.groupBy { it }
+            if (!grpBy['A'].isNullOrEmpty())
+                result.add(1)
+            else if (!grpBy['C'].isNullOrEmpty())
+                result.add(2)
+            else if (!grpBy['G'].isNullOrEmpty())
+                result.add(3)
+            else
+                result.add(4)
+        }
+        return result.toIntArray()
+    }
+
+    /*
+MinAvgTwoSlice
+A non-empty array A consisting of N integers is given. A pair of integers (P, Q), such that 0 ≤ P < Q < N, is called a slice of array A (notice that the slice contains at least two elements). The average of a slice (P, Q) is the sum of A[P] + A[P + 1] + ... + A[Q] divided by the length of the slice. To be precise, the average equals (A[P] + A[P + 1] + ... + A[Q]) / (Q − P + 1).
+
+For example, array A such that:
+
+    A[0] = 4
+    A[1] = 2
+    A[2] = 2
+    A[3] = 5
+    A[4] = 1
+    A[5] = 5
+    A[6] = 8
+contains the following example slices:
+
+slice (1, 2), whose average is (2 + 2) / 2 = 2;
+slice (3, 4), whose average is (5 + 1) / 2 = 3;
+slice (1, 4), whose average is (2 + 2 + 5 + 1) / 4 = 2.5.
+The goal is to find the starting position of a slice whose average is minimal.
+
+Write a function:
+
+fun solution(A: IntArray): Int
+
+that, given a non-empty array A consisting of N integers, returns the starting position of the slice with the minimal average. If there is more than one slice with a minimal average, you should return the smallest starting position of such a slice.
+
+For example, given array A such that:
+
+    A[0] = 4
+    A[1] = 2
+    A[2] = 2
+    A[3] = 5
+    A[4] = 1
+    A[5] = 5
+    A[6] = 8
+the function should return 1, as explained above.
+
+Write an efficient algorithm for the following assumptions:
+
+N is an integer within the range [2..100,000];
+each element of array A is an integer within the range [−10,000..10,000].
  */
 
-fun main() {
-    val firstArray = arrayListOf<Int>(2, 5, 0).toIntArray()
-    val secondArray = arrayListOf<Int>(4, 5, 6).toIntArray()
-    Lesson05().genomicRangeQuery02("CAGCCTA", firstArray, secondArray)
+    fun minAvgTwoSlice(inputArray: IntArray): Int {
+        //codility 50%
+        var output = 0
+        var minAvg: Float? = null
+        for (i in 0..inputArray.lastIndex) {
+            for (j in i + 1..inputArray.lastIndex) {
+                var mK = 0
+                var sum = 0
+                for (k in i..j) {
+                    sum += inputArray[k]
+                    mK = k
+                }
+                val result = sum.toFloat() / (mK + 1 - i)
+                if (minAvg == null || minAvg > result) {
+                    minAvg = result
+                    output = i
+                }
+            }
+        }
+        return output
+    }
 }

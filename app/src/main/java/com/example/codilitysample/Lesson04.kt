@@ -1,5 +1,7 @@
 package com.example.codilitysample
 
+
+class Lesson04 {
 //region FrogRiverOne
 /*
 A small frog wants to get to the other side of a river. The frog is initially located on one bank of the river (position 0) and wants to get to the opposite bank (position X+1). Leaves fall from a tree onto the surface of the river.
@@ -47,27 +49,27 @@ each element of array A is an integer within the range [1..X].
 Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
  */
 
-fun callFrogRiverOne() {
-    val inputArray = intArrayOf(1, 3, 1, 4, 2, 3, 5, 4)
-    frogRiverOne(5, inputArray)
-}
-
-//100% Codility
-fun frogRiverOne(x: Int, inputLeavesArray: IntArray): Int {
-    var successPoint = 0
-    val fallLeavesArray = BooleanArray(x + 1)
-    for (i in inputLeavesArray.indices) {
-        val inputLeaf = inputLeavesArray[i]
-        if (!fallLeavesArray[inputLeaf]) {
-            fallLeavesArray[inputLeaf] = true
-            successPoint++
-        }
-        if (successPoint == x) {
-            return i
-        }
+    fun callFrogRiverOne() {
+        val inputArray = intArrayOf(1, 3, 1, 4, 2, 3, 5, 4)
+        frogRiverOne(5, inputArray)
     }
-    return -1
-}
+
+    //100% Codility
+    fun frogRiverOne(x: Int, inputLeavesArray: IntArray): Int {
+        var successPoint = 0
+        val fallLeavesArray = BooleanArray(x + 1)
+        for (i in inputLeavesArray.indices) {
+            val inputLeaf = inputLeavesArray[i]
+            if (!fallLeavesArray[inputLeaf]) {
+                fallLeavesArray[inputLeaf] = true
+                successPoint++
+            }
+            if (successPoint == x) {
+                return i
+            }
+        }
+        return -1
+    }
 //endregion
 
 //region PermCheck
@@ -120,31 +122,31 @@ each element of array A is an integer within the range [1..1,000,000,000].
 Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
  */
 
-fun permCheck01(inputArray: IntArray): Int {
-    //50% codility
-    val distinctSort = inputArray.toSet().toList().sorted()
-    return if (distinctSort.last() == distinctSort.size) 1
-    else 0
-}
-
-fun permCheck02(inputArray: IntArray): Int {
-    //58% codility
-    var counter = 0
-    val inputSize = inputArray.size
-    val inputBoolean = BooleanArray(inputSize)
-    for (i in inputArray) {
-        if (i > inputSize)
-            return 0
-        if (!inputBoolean[i - 1]) {
-            inputBoolean[i - 1] = true
-            counter++
-        }
+    fun permCheck01(inputArray: IntArray): Int {
+        //50% codility
+        val distinctSort = inputArray.toSet().toList().sorted()
+        return if (distinctSort.last() == distinctSort.size) 1
+        else 0
     }
-    for (i in 0 until counter)
-        if (!inputBoolean[i])
-            return 0
-    return 1
-}
+
+    fun permCheck02(inputArray: IntArray): Int {
+        //58% codility
+        var counter = 0
+        val inputSize = inputArray.size
+        val inputBoolean = BooleanArray(inputSize)
+        for (i in inputArray) {
+            if (i > inputSize)
+                return 0
+            if (!inputBoolean[i - 1]) {
+                inputBoolean[i - 1] = true
+                counter++
+            }
+        }
+        for (i in 0 until counter)
+            if (!inputBoolean[i])
+                return 0
+        return 1
+    }
 //endregion
 
 //region MaxCounter
@@ -203,35 +205,35 @@ each element of array A is an integer within the range [1..N + 1].
 Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
  */
 
-fun maxCounter(counterCount: Int, inputArray: IntArray): IntArray {
-    //codility 100%
-    val condition = counterCount + 1
-    var currentMax = 0
-    var lastUpdate = 0
-    val counters = IntArray(counterCount)
-    for (m in inputArray.indices) {
-        val currentValue = inputArray[m]
-        if (currentValue == condition) {
-            lastUpdate = currentMax
-        } else {
-            val position = currentValue - 1
-            if (counters[position] < lastUpdate) {
-                counters[position] = lastUpdate + 1
+    fun maxCounter(counterCount: Int, inputArray: IntArray): IntArray {
+        //codility 100%
+        val condition = counterCount + 1
+        var currentMax = 0
+        var lastUpdate = 0
+        val counters = IntArray(counterCount)
+        for (m in inputArray.indices) {
+            val currentValue = inputArray[m]
+            if (currentValue == condition) {
+                lastUpdate = currentMax
             } else {
-                counters[position]++
-            }
-            if (counters[position] > currentMax) {
-                currentMax = counters[position]
+                val position = currentValue - 1
+                if (counters[position] < lastUpdate) {
+                    counters[position] = lastUpdate + 1
+                } else {
+                    counters[position]++
+                }
+                if (counters[position] > currentMax) {
+                    currentMax = counters[position]
+                }
             }
         }
-    }
-    for (i in 0 until counterCount) {
-        if (counters[i] < lastUpdate) {
-            counters[i] = lastUpdate
+        for (i in 0 until counterCount) {
+            if (counters[i] < lastUpdate) {
+                counters[i] = lastUpdate
+            }
         }
+        return counters
     }
-    return counters
-}
 //endregion
 
 //region MissingInteger
@@ -257,28 +259,29 @@ each element of array A is an integer within the range [−1,000,000..1,000,000]
 Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
  */
 
-fun missingInteger01(inputArray: IntArray): Int {
-    //55% Codility
-    inputArray.sort()
-    if (inputArray.last() < 0) return 1
-    for (i in inputArray.indices) {
-        if (inputArray[i] > 0
-            && i != inputArray.lastIndex
-            && inputArray[i] + 1 < inputArray[i + 1]
-        )
-            return inputArray[i] + 1
+    fun missingInteger01(inputArray: IntArray): Int {
+        //55% Codility
+        inputArray.sort()
+        if (inputArray.last() < 0) return 1
+        for (i in inputArray.indices) {
+            if (inputArray[i] > 0
+                && i != inputArray.lastIndex
+                && inputArray[i] + 1 < inputArray[i + 1]
+            )
+                return inputArray[i] + 1
+        }
+        return inputArray.last() + 1
     }
-    return inputArray.last() + 1
-}
 
-fun missingInteger02(inputArray: IntArray): Int {
-    //100% Codility
-    inputArray.sort()
-    var result = 1
-    for (i in inputArray) {
-        if (i == result)
-            result++
+    fun missingInteger02(inputArray: IntArray): Int {
+        //100% Codility
+        inputArray.sort()
+        var result = 1
+        for (i in inputArray) {
+            if (i == result)
+                result++
+        }
+        return result
     }
-    return result
-}
 //endregion
+}

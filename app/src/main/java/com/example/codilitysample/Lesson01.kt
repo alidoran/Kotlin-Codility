@@ -1,6 +1,8 @@
 package com.example.codilitysample
 
-//region BinaryGap
+
+class Lesson01{
+    //region BinaryGap
 /*
 A binary gap within a positive integer N is any maximal sequence of consecutive zeros that is surrounded by ones at both ends in the binary representation of N.
 
@@ -19,15 +21,16 @@ Write an efficient algorithm for the following assumptions:
 N is an integer within the range [1..2,147,483,647].
 Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
  */
-fun binaryGapCount(num: Int): Int {
-    val binaryNum = Integer.toBinaryString(num)
-    val regex = "(?<=1)(0+)(?=1)".toRegex()
-    val d = regex.findAll(binaryNum).toList()
-    var max = 0
-    for (list in d) {
-        if (list.value.length > max)
-            max = list.value.length
+    fun binaryGapCount(num: Int): Int {
+        val binaryNum = Integer.toBinaryString(num)
+        val regex = "(?<=1)(0+)(?=1)".toRegex()
+        val d = regex.findAll(binaryNum).toList()
+        var max = 0
+        for (list in d) {
+            if (list.value.length > max)
+                max = list.value.length
+        }
+        return max
     }
-    return max
 }
 //endregion

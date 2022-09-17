@@ -1,7 +1,8 @@
 package com.example.codilitysample
 
 import java.util.*
-import kotlin.collections.ArrayList
+
+class Lesson02{
 
 //region CyclicRotation
 /*
@@ -117,8 +118,10 @@ fun oddOccurrencesInArray2(inputArray: IntArray): Int {
 fun oddOccurrencesInArray3(inputArray: IntArray): Int {
     //result 66%
     val intArray = inputArray.toMutableList()
-    var a = intArray.groupingBy { i -> i }.eachCount().filter { i -> i.value == 1 }.toList()
-    return a.get(0).first
+    val list = intArray.groupingBy { i -> i }.eachCount().filter { i -> i.value == 1 }.toList()
+    return list[0].first
 }
 
 //endregion
+
+}

@@ -3,7 +3,8 @@ package com.example.codilitysample
 import kotlin.math.abs
 import kotlin.math.ceil
 
-//region FrogJmp
+class Lesson03 {
+    //region FrogJmp
 /*
 A small frog wants to get to the other side of the road. The frog is currently located at position X and wants to get to a position greater than or equal to Y. The small frog always jumps a fixed distance, D.
 
@@ -31,13 +32,13 @@ X, Y and D are integers within the range [1..1,000,000,000];
 X ≤ Y.
 Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
  */
-fun frogJmp(x: Int, y: Int, d: Int): Int {
-    //100% codility
-    return ceil((y - x) / d.toDouble()).toInt()
-}
+    fun frogJmp(x: Int, y: Int, d: Int): Int {
+        //100% codility
+        return ceil((y - x) / d.toDouble()).toInt()
+    }
 //endregion
 
-//region PermMissingElem
+    //region PermMissingElem
 /*
 An array A consisting of N different integers is given. The array contains integers in the range [1..(N + 1)], which means that exactly one element is missing.
 
@@ -64,27 +65,27 @@ the elements of A are all distinct;
 each element of array A is an integer within the range [1..(N + 1)].
 Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
  */
-fun permMissingElem01(array: IntArray): Int {
-    //50% codility
-    array.sort()
-    array.forEachIndexed { index, i -> if (i - 1 != index) return index + 1 }
-    return 0
-}
-
-fun permMissingElem02(array: IntArray): Int {
-    //80% codility
-    val sumArray = array.sum()
-    var sum = 0
-    var i = 0
-    while (sumArray >= sum) {
-        sum += (i + 1)
-        i++
+    fun permMissingElem01(array: IntArray): Int {
+        //50% codility
+        array.sort()
+        array.forEachIndexed { index, i -> if (i - 1 != index) return index + 1 }
+        return 0
     }
-    return sum - sumArray
-}
+
+    fun permMissingElem02(array: IntArray): Int {
+        //80% codility
+        val sumArray = array.sum()
+        var sum = 0
+        var i = 0
+        while (sumArray >= sum) {
+            sum += (i + 1)
+            i++
+        }
+        return sum - sumArray
+    }
 //endregion
 
-//region TapeEquilibrium
+    //region TapeEquilibrium
 /*
 A non-empty array A consisting of N integers is given. Array A represents numbers on a tape.
 
@@ -128,68 +129,69 @@ N is an integer within the range [2..100,000];
 each element of array A is an integer within the range [−1,000..1,000].
 Copyright 2009–2022 by Codility Limited. All Rights Reserved. Unauthorized copying, publication or disclosure prohibited.
  */
-fun callTapeEquilibrium() {
-    val inputArrList = intArrayOf(3, 1, 2, 4, 3)
-    println(tapeEquilibrium03(inputArrList))
-}
+    fun callTapeEquilibrium() {
+        val inputArrList = intArrayOf(3, 1, 2, 4, 3)
+        println(tapeEquilibrium03(inputArrList))
+    }
 
-fun tapeEquilibrium01(inputList: IntArray): Int {
-    //69% Codility
-    var output = 0
-    for (i in 0 until inputList.size - 1) {
+    fun tapeEquilibrium01(inputList: IntArray): Int {
+        //69% Codility
+        var output = 0
+        for (i in 0 until inputList.size - 1) {
+            var preNum = 0
+            var postNum = 0
+            for (j in i downTo 0) {
+                preNum += inputList[j]
+            }
+            for (j in i + 1 until inputList.size) {
+                postNum += inputList[j]
+            }
+            val resultPart = Math.abs(preNum - postNum)
+            if (i == 0) {
+                output = resultPart
+            } else {
+                if (resultPart < output) {
+                    output = resultPart
+                }
+            }
+        }
+        return output
+    }
+
+    fun tapeEquilibrium02(inputList: IntArray): Int {
+        //69% codility
+        var output = 0
         var preNum = 0
-        var postNum = 0
-        for (j in i downTo 0) {
-            preNum += inputList[j]
-        }
-        for (j in i + 1 until inputList.size) {
-            postNum += inputList[j]
-        }
-        val resultPart = Math.abs(preNum - postNum)
-        if (i == 0) {
-            output = resultPart
-        } else {
-            if (resultPart < output) {
+        for (i in 0 until inputList.size - 1) {
+            var postNum = 0
+            preNum += inputList[i]
+            for (j in i + 1 until inputList.size) {
+                postNum += inputList[j]
+            }
+            val resultPart = Math.abs(preNum - postNum)
+            if (i == 0) {
                 output = resultPart
+            } else {
+                if (resultPart < output) {
+                    output = resultPart
+                }
             }
         }
+        return output
     }
-    return output
-}
 
-fun tapeEquilibrium02(inputList: IntArray): Int {
-    //69% codility
-    var output = 0
-    var preNum = 0
-    for (i in 0 until inputList.size - 1) {
-        var postNum = 0
-        preNum += inputList[i]
-        for (j in i + 1 until inputList.size) {
-            postNum += inputList[j]
+    private fun tapeEquilibrium03(inputList: IntArray): Int {
+        //100% codility
+        var output = 0
+        var leftSum = 0
+        val sum = inputList.sum()
+        for (i in 0 until inputList.size - 1) {
+            leftSum += inputList[i]
+            val resultPart = abs((sum - leftSum) - leftSum)
+            if (i == 0) output = resultPart
+            else if (resultPart < output) output = resultPart
         }
-        val resultPart = Math.abs(preNum - postNum)
-        if (i == 0) {
-            output = resultPart
-        } else {
-            if (resultPart < output) {
-                output = resultPart
-            }
-        }
+        return output
     }
-    return output
-}
-
-private fun tapeEquilibrium03(inputList: IntArray): Int {
-    //100% codility
-    var output = 0
-    var leftSum = 0
-    val sum = inputList.sum()
-    for (i in 0 until inputList.size - 1) {
-        leftSum += inputList[i]
-        val resultPart = abs((sum - leftSum) - leftSum)
-        if (i == 0) output = resultPart
-        else if (resultPart < output) output = resultPart
-    }
-    return output
-}
 //endregion
+}
